@@ -1,4 +1,4 @@
-package imageprocessing
+package main
 
 import (
 	"fmt"
@@ -53,9 +53,9 @@ func Fill[T any](a []T, val T) {
 func AdjustBrightness[T image.Gray | image.RGBA | image.Gray16 | image.RGBA64](img *T, val int) error {
 	switch castedImage := any(img).(type) {
 	case *image.Gray:
-		return sum(castedImage.Pix, len(castedImage.Pix), castedImage.Stride, val)
+		return sum(castedImage.Pix, len(castedImage.Pix), 1, val)
 	case *image.Gray16:
-		return sum(castedImage.Pix, len(castedImage.Pix), castedImage.Stride, val)
+		return sum(castedImage.Pix, len(castedImage.Pix), 1, val)
 	case *image.RGBA:
 		channels := make(chan error, 3)
 		for i := 0; i < 3; i++ {
@@ -73,7 +73,7 @@ func AdjustBrightness[T image.Gray | image.RGBA | image.Gray16 | image.RGBA64](i
 		channels := make(chan error, 3)
 		for i := 0; i < 3; i++ {
 			go func(i int) {
-				channels <- sum(castedImage.Pix[i:], len(castedImage.Pix), 8, val)
+				channels <- sum(castedImage.Pix[i:], len(castedImage.Pix), 4, val)
 			}(i)
 		}
 		for i := 0; i < 3; i++ {

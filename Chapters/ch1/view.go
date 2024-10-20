@@ -1,4 +1,4 @@
-package view
+package main
 
 import (
 	"image"
@@ -14,7 +14,8 @@ type BrightnessView struct {
 	BrightnessLabel *widget.Label
 	StepLabel       *widget.Label
 	StatusLabel     *widget.Label
-	SavedLevelsText *widget.MultiLineEntry
+	SavedLevelsText *widget.Entry
+	ProgressBar     *widget.ProgressBar
 }
 
 func NewBrightnessView(img *image.Gray) *BrightnessView {
@@ -26,7 +27,11 @@ func NewBrightnessView(img *image.Gray) *BrightnessView {
 	statusLabel := widget.NewLabel("")
 
 	savedLevelsText := widget.NewMultiLineEntry()
-	savedLevelsText.Disable()
+
+	Progresbar := widget.NewProgressBar()
+	Progresbar.Max = 255
+	Progresbar.Min = 0
+	Progresbar.Value = 0
 
 	return &BrightnessView{
 		ImgCanvas:       imgCanvas,
@@ -34,6 +39,7 @@ func NewBrightnessView(img *image.Gray) *BrightnessView {
 		StepLabel:       stepLabel,
 		StatusLabel:     statusLabel,
 		SavedLevelsText: savedLevelsText,
+		ProgressBar:     Progresbar,
 	}
 }
 
@@ -50,5 +56,8 @@ func (bv *BrightnessView) UpdateSavedLevels(detectedLevels []int) {
 		levelsStr = append(levelsStr, strconv.Itoa(level))
 	}
 	bv.SavedLevelsText.SetText(strings.Join(levelsStr, "\n"))
-	bv.StatusLabel.SetText("Saved level!")
+}
+
+func (bv *BrightnessView) SetStatusMessage(message string) {
+	bv.StatusLabel.SetText(message)
 }
