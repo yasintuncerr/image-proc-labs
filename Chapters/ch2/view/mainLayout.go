@@ -1,6 +1,8 @@
 package view
 
 import (
+	"image"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/layout"
@@ -13,26 +15,30 @@ type MainLayout struct {
 	Container            *fyne.Container
 }
 
-func NewMainLayout(originalImg *ImageCanvas, quantizedImg *ImageCanvas, sidebar *Sidebar) *MainLayout {
-	// Create the layout container with two columns for images and a sidebar on the right
+func NewMainLayout() *MainLayout {
+
+	img := image.NewGray(image.Rect(0, 0, 512, 512))
+
+	originalImg := NewImageCanvas(img, "Original Image", 800, 600)
+	quantizedImg := NewImageCanvas(img, "Quantized Image", 800, 600)
+	sidebar := NewSidebar(400)
+
 	mainLayout := &MainLayout{
 		OriginalImageCanvas:  originalImg,
 		QuantizedImageCanvas: quantizedImg,
 		Sidebar:              sidebar,
 	}
 
-	// Create containers for the original and quantized image side by side
 	imageContainer := container.New(
 		layout.NewHBoxLayout(),
-		originalImg.ImgCanvas,  // Original Image on the left
-		quantizedImg.ImgCanvas, // Quantized Image on the right
+		originalImg.ImgCanvas,
+		quantizedImg.ImgCanvas,
 	)
 
-	// The sidebar will be placed to the right of the images
 	mainLayout.Container = container.New(
 		layout.NewHBoxLayout(),
-		imageContainer,         // Images (original and quantized) in the first column
-		sidebar.GetContainer(), // Sidebar in the second column
+		imageContainer,
+		sidebar.GetContainer(),
 	)
 
 	return mainLayout
@@ -40,4 +46,8 @@ func NewMainLayout(originalImg *ImageCanvas, quantizedImg *ImageCanvas, sidebar 
 
 func (ml *MainLayout) GetContainer() *fyne.Container {
 	return ml.Container
+}
+
+func (ml *MainLayout) GetWindow() fyne.Window {
+	return fyne.CurrentApp().NewWindow("Image Processing Lab")
 }
