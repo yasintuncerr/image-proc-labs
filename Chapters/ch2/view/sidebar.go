@@ -10,16 +10,22 @@ import (
 )
 
 type Sidebar struct {
+	OpenFileBtn *widget.Button
+	ExportBtn   *widget.Button
 	Slider      *widget.Slider
 	ApplyBtn    *widget.Button
 	MAELabel    *widget.Label
 	PSNRLabel   *widget.Label
-	SliderValue *widget.Label // New label to display the current slider value
+	SliderValue *widget.Label
 	Width       float32
 	Container   *fyne.Container
 }
 
-func NewSidebar(applyFunc func(level int), width float32) *Sidebar {
+func NewSidebar(width float32) *Sidebar {
+	OpenFileBtn := widget.NewButton("Open File", func() {
+		// Placeholder for the open file function
+	})
+
 	slider := widget.NewSlider(1, 8)
 	slider.Step = 1
 	slider.Value = 1
@@ -34,32 +40,42 @@ func NewSidebar(applyFunc func(level int), width float32) *Sidebar {
 	psnrLabel := widget.NewLabel("PSNR: Not Calculated")
 
 	applyBtn := widget.NewButton("Apply", func() {
-		level := int(slider.Value)
-		applyFunc(level) // Call the apply function with the current slider value
+		// Placeholder for the apply function
+	})
+
+	exportBtn := widget.NewButton("Export", func() {
+		// Placeholder for the export function
 	})
 
 	sidebar := &Sidebar{
+		OpenFileBtn: OpenFileBtn,
+		ExportBtn:   exportBtn,
 		Slider:      slider,
 		ApplyBtn:    applyBtn,
 		MAELabel:    maeLabel,
 		PSNRLabel:   psnrLabel,
 		SliderValue: sliderValueLabel,
-		Width:       width, // Store the width in the struct
+		Width:       width,
 	}
 
 	sidebar.Container = container.NewVBox(
-		widget.NewLabel("Level"),
-		slider,           // Slider in the middle
-		sliderValueLabel, // Display the current slider value
+		OpenFileBtn,
+		layout.NewSpacer(),
+		exportBtn,
+		layout.NewSpacer(),
+		sliderValueLabel,
+		slider,
+		layout.NewSpacer(),
 		applyBtn,
+		layout.NewSpacer(),
 		widget.NewLabel("Metrics"),
 		maeLabel,
 		psnrLabel,
-		layout.NewSpacer(), // Push everything to the top
+		layout.NewSpacer(),
 	)
 
 	sidebar.Container = container.New(layout.NewVBoxLayout(), sidebar.Container)
-	sidebar.Container.Resize(fyne.NewSize(sidebar.Width, 0)) // Use the width from the struct
+	sidebar.Container.Resize(fyne.NewSize(sidebar.Width, 0))
 
 	return sidebar
 }
@@ -73,6 +89,6 @@ func (s *Sidebar) UpdatePSNR(psnr float64) {
 }
 
 func (s *Sidebar) GetContainer() *fyne.Container {
-	s.Container.Resize(fyne.NewSize(s.Width, 0)) // Ensure the width is applied
+	s.Container.Resize(fyne.NewSize(s.Width, 0))
 	return s.Container
 }
