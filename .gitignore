@@ -12,7 +12,9 @@
 # make sure we don't ignore the folders
 !ch*/
 
+app
 
+!app*/
 # Test binary, built with `go test -c`
 *.test
 
