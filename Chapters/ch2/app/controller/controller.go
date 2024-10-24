@@ -7,8 +7,8 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/dialog"
-	model "github.com/yasintuncerr/image-proc-labs/Chapters/ch2/model"
-	view "github.com/yasintuncerr/image-proc-labs/Chapters/ch2/view"
+	model "github.com/yasintuncerr/image-proc-labs/Chapters/ch2/app/model"
+	view "github.com/yasintuncerr/image-proc-labs/Chapters/ch2/app/view"
 )
 
 func IsImageEmpty(img *image.Gray) bool {

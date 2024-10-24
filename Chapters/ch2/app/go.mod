@@ -1,4 +1,4 @@
-module github.com/yasintuncerr/image-proc-labs/Chapters/ch2
+module github.com/yasintuncerr/image-proc-labs/Chapters/ch2/app
 
 go 1.22.5
 

@@ -2,9 +2,9 @@ package main
 
 import (
 	"fyne.io/fyne/v2/app"
-	Controller "github.com/yasintuncerr/image-proc-labs/Chapters/ch2/controller"
-	Model "github.com/yasintuncerr/image-proc-labs/Chapters/ch2/model"
-	View "github.com/yasintuncerr/image-proc-labs/Chapters/ch2/view"
+	Controller "github.com/yasintuncerr/image-proc-labs/Chapters/ch2/app/controller"
+	Model "github.com/yasintuncerr/image-proc-labs/Chapters/ch2/app/model"
+	View "github.com/yasintuncerr/image-proc-labs/Chapters/ch2/app/view"
 )
 
 func main() {
